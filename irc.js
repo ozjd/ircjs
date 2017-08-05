@@ -51,6 +51,7 @@ class ircJS extends EventEmitter3 {
 
     this.client = this.c = {
       away: false,
+      debug: false,
       me: 'Guest_' + Math.floor((Math.random() * 4294967295) + 1).toString(16),
       port: port,
       realName: 'ircJS v0.01a',
@@ -180,6 +181,14 @@ class ircJS extends EventEmitter3 {
     // TODO: Should check connection is active.
     if (typeof data !== 'string')
       throw new TypeError('data should be of type string')
+    if (this.debug === true)
+      console.log(`--> ${ data }`)
+  }
+
+  showDebug(debugEnabled = false) {
+    if (typeof debugEnabled !== 'boolean')
+      throw new TypeError('debugEnabled should be of type boolean')
+    this.debug = debugEnabled
   }
 
   _setHandlers() {
@@ -261,6 +270,9 @@ class ircJS extends EventEmitter3 {
     * @param {string} data Incoming data
     */
     this.on('line', (data) => {
+      if (this.debug === true)
+        console.log(`<-- ${ data }`)
+
       // Actual IRC parser
       // Will drop data if command is invalid/missing
       const words = data.split(' '),
