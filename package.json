@@ -1,10 +1,8 @@
 {
   "name": "ircjs",
-  "version": "1.0.1",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "version": "1.0.2",
+  "main": "irc.js",
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ozjd/ircjs.git"
@@ -24,5 +22,7 @@
     "client",
     "chat"
   ],
-  "description": ""
+  "description": "ircJS is a class designed to make it easier to connect and utilise IRC with Javascript",
+  "devDependencies": {},
+  "dependencies": {}
 }
