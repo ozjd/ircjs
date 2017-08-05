@@ -217,12 +217,12 @@ class ircJS extends EventEmitter3 {
 
     this.on('CTCP', (cmd, text) => {
       if (cmd === 'PING')
-        sock.ctcpReply(sock.event.nick, `${ cmd } ${ text }`)
+        this.ctcpReply(sock.event.nick, `${ cmd } ${ text }`)
       if (text === '') {
         if (cmd === 'TIME')
-          sock.ctcpReply(sock.event.nick, `${ cmd } ${ new Date() }`)
+          this.ctcpReply(sock.event.nick, `${ cmd } ${ new Date() }`)
         else if (cmd === 'VERSION')
-          sock.ctcpReply(sock.event.nick, `${ cmd } ircJS v0 Alpha by JD`)
+          this.ctcpReply(sock.event.nick, `${ cmd } ircJS v0 Alpha by JD`)
       }
     })
 
