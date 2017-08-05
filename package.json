@@ -1,6 +1,6 @@
 {
   "name": "ircjs",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "main": "irc.js",
   "scripts": {},
   "repository": {
@@ -24,5 +24,7 @@
   ],
   "description": "ircJS is a class designed to make it easier to connect and utilise IRC with Javascript",
   "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "eventemitter3": "^2.0.3"
+  }
 }
