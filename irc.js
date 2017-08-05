@@ -54,7 +54,7 @@ class ircJS extends EventEmitter3 {
       debug: false,
       me: 'Guest_' + Math.floor((Math.random() * 4294967295) + 1).toString(16),
       port: port,
-      realName: 'ircJS v0.01a',
+      realName: 'ircJS v1 by JD',
       server: null,
       serverTarget: hostname,
       ssl: useTLS,
@@ -217,12 +217,12 @@ class ircJS extends EventEmitter3 {
 
     this.on('CTCP', (cmd, text) => {
       if (cmd === 'PING')
-        this.ctcpReply(sock.event.nick, `${ cmd } ${ text }`)
+        this.ctcpReply(this.event.nick, `${ cmd } ${ text }`)
       if (text === '') {
         if (cmd === 'TIME')
-          this.ctcpReply(sock.event.nick, `${ cmd } ${ new Date() }`)
+          this.ctcpReply(this.event.nick, `${ cmd } ${ new Date() }`)
         else if (cmd === 'VERSION')
-          this.ctcpReply(sock.event.nick, `${ cmd } ircJS v0 Alpha by JD`)
+          this.ctcpReply(this.event.nick, `${ cmd } ircJS v1 by JD`)
       }
     })
 
