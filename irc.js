@@ -191,6 +191,11 @@ class ircJS extends EventEmitter3 {
     if (typeof nickname !== 'string')
       throw new TypeError('nickname should be of type string')
 
+    // Any '?' in nickname is replaced by a single random digit.
+    nickname = nickname.split('')
+               .map((x)=>{return x==='?'?Math.floor(Math.random()*10):x})
+               .join('')
+
     if (([0, 3].indexOf(this.connectionState)) !== -1) // Disconnect(ing|ed)
       this.client.me = nickname
     else
