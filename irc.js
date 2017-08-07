@@ -387,7 +387,8 @@ class ircJS extends EventEmitter3 {
       // <TOPIC> <Tchannel> :<topic>
       // <INVITE> <Tnickname> <channel>
       // <KILL> <Tnickname> :<comment>
-      else if (['INVITE', 'TOPIC'].indexOf(cmd) !== -1) {
+      // <PART> <Tchannel> :[message]
+      else if (['INVITE', 'TOPIC', 'KILL', 'PART'].indexOf(cmd) !== -1) {
         const [target, text] = parsedLine.params
         this.event['target'] = target
         this.emit(cmd, text)
