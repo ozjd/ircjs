@@ -395,7 +395,7 @@ class ircJS extends EventEmitter3 {
 
       // MODE <Ttarget> <...modes>
       else if ('MODE' === cmd) {
-        const [target, ...modes]
+        const [target, ...modes] = parsedLine.params
         this.event['target'] = target
         this.emit(cmd, modes.join(' '))
         this.event['target'] = null
