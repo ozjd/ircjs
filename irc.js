@@ -54,11 +54,12 @@ class ircJS extends EventEmitter3 {
       debug: false,
       me: 'Guest_' + Math.floor((Math.random() * 4294967295) + 1).toString(16),
       port: port,
-      realName: `${ this.constructor.name } (ircJS v${ require('./package.json').version }) by JD`,
+      realName: `ircJS v${ require('./package.json').version } by JD`,
       server: null,
       serverTarget: hostname,
       ssl: useTLS,
-      userName: 'IRCSock'
+      userName: 'IRCSock',
+      _versionString: `ircJS v${ require('./package.json').version } by JD`
     };
 
     /**
@@ -203,12 +204,7 @@ class ircJS extends EventEmitter3 {
       this.client['server'] = this.hostname
 
       // BEGIN - TODO: Remove this stuff.
-      let userAgent = ''
-      if (typeof process !== 'undefined')
-        for (let k in process.versions) { userAgent += `${ k }: ${ process.versions[k] }; ` }
-      else if (typeof navigator !== 'undefined')
-        userAgent = navigator.userAgent
-      sock.send(`IRCVERS IRC8 ${ this.constructor.name } en-us :${ userAgent }`)
+      sock.send(`IRCVERS IRC8 ircJS en-us :${ this.client._versionString }`)
       // END -
 
       this.send(`USER ${ this.client.userName } - - :${ this.client.realName }`)
@@ -222,7 +218,7 @@ class ircJS extends EventEmitter3 {
         if (cmd === 'TIME')
           this.ctcpReply(this.event.nick, `${ cmd } ${ new Date() }`)
         else if (cmd === 'VERSION')
-          this.ctcpReply(this.event.nick, `${ cmd } ${ this.constructor.name } (ircJS v${ require('./package.json').version }) by JD`)
+          this.ctcpReply(this.event.nick, `${ cmd } ${ this.client._versionString }`)
       }
     })
 
