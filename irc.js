@@ -51,6 +51,7 @@ class ircJS extends EventEmitter3 {
 
     this.client = this.c = {
       away: false,
+      connectionState: 0,
       debug: false,
       me: 'Guest_' + Math.floor((Math.random() * 4294967295) + 1).toString(16),
       port: port,
@@ -186,6 +187,21 @@ class ircJS extends EventEmitter3 {
       console.log(`--> ${ data }`)
   }
 
+  setNickname(nickname) {
+    if (typeof nickname !== 'string')
+      throw new TypeError('nickname should be of type string')
+
+    if (this.connectionState.indexOf([0, 3]) !== -1) // Disconnect(ing|ed)
+      this.client.me = nickname
+    else
+      this.send(`NICK ${ this.client.me }`)
+    // connectionState
+    // 0 disconnected
+    // 1 loggingIn
+    // 2 connected
+    // 3 disconnecting (not used)
+  }
+
   showDebug(debugEnabled = false) {
     if (typeof debugEnabled !== 'boolean')
       throw new TypeError('debugEnabled should be of type boolean')
@@ -202,6 +218,7 @@ class ircJS extends EventEmitter3 {
      */
     this.on('connect', (sock) => {
       this.client['server'] = this.hostname
+      this.connectionState = 1
 
       // BEGIN - TODO: Remove this stuff.
       sock.send(`IRCVERS IRC8 ircJS en-us :${ this.client._versionString }`)
@@ -252,6 +269,7 @@ class ircJS extends EventEmitter3 {
      * @memberof ircJS
      */
     this.on('disconnect', () => {
+      this.connectionState = 0
       // TODO: Cleanup this object back to original state. (remove address list etc)
     })
 
@@ -434,13 +452,16 @@ class ircJS extends EventEmitter3 {
     })
 
     this.on('raw 001', (parsedLine) => {
+      this.connectionState = 2
       this.client['me'] = this.event.target
       this.client['server'] = parsedLine.prefix.name
-      // TODO: Connection state: LoggedIn
     })
 
     this.on('PING', (params) => this.send(`PONG :${ params }`))
-
+    this.on('NICK', (newNick) => {
+      if (this.event.nick === this.client.me)
+        this.client.me = newNick
+    })
   }
 }
 
