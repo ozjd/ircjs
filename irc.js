@@ -194,7 +194,7 @@ class ircJS extends EventEmitter3 {
     if (([0, 3].indexOf(this.connectionState)) !== -1) // Disconnect(ing|ed)
       this.client.me = nickname
     else
-      this.send(`NICK ${ this.client.me }`)
+      this.send(`NICK ${ nickname }`)
     // connectionState
     //  0 disconnected
     //  1 loggingIn
