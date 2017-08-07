@@ -334,8 +334,6 @@ class ircJS extends EventEmitter3 {
       const cmd = parsedLine.command.toUpperCase()
       this.event['rawMsg'] = parsedLine.source
 
-      //TODO: add 'MODE'
-
       // JOIN [special] <channel>
       if (['JOIN'].indexOf(cmd) !== -1) {
         let special,
@@ -392,6 +390,14 @@ class ircJS extends EventEmitter3 {
         const [target, text] = parsedLine.params
         this.event['target'] = target
         this.emit(cmd, text)
+        this.event['target'] = null
+      }
+
+      // MODE <Ttarget> <...modes>
+      else if ('MODE' === cmd) {
+        const [target, ...modes]
+        this.event['target'] = target
+        this.emit(cmd, modes.join(' '))
         this.event['target'] = null
       }
 
