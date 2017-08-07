@@ -54,7 +54,7 @@ class ircJS extends EventEmitter3 {
       debug: false,
       me: 'Guest_' + Math.floor((Math.random() * 4294967295) + 1).toString(16),
       port: port,
-      realName: `ircJS v${ require('./package.json').version } - https://github.com/ozjd/ircjs`,
+      realName: `${ this.constructor.name } (ircJS v${ require('./package.json').version }) by JD`,
       server: null,
       serverTarget: hostname,
       ssl: useTLS,
@@ -222,7 +222,7 @@ class ircJS extends EventEmitter3 {
         if (cmd === 'TIME')
           this.ctcpReply(this.event.nick, `${ cmd } ${ new Date() }`)
         else if (cmd === 'VERSION')
-          this.ctcpReply(this.event.nick, `${ cmd } ircJS v${ require('./package.json').version } - https://github.com/ozjd/ircjs`)
+          this.ctcpReply(this.event.nick, `${ cmd } ${ this.constructor.name } (ircJS v${ require('./package.json').version }) by JD`)
       }
     })
 
