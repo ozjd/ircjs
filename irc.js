@@ -191,15 +191,15 @@ class ircJS extends EventEmitter3 {
     if (typeof nickname !== 'string')
       throw new TypeError('nickname should be of type string')
 
-    if (this.connectionState.indexOf([0, 3]) !== -1) // Disconnect(ing|ed)
+    if (([0, 3].indexOf(this.connectionState)) !== -1) // Disconnect(ing|ed)
       this.client.me = nickname
     else
       this.send(`NICK ${ this.client.me }`)
     // connectionState
-    // 0 disconnected
-    // 1 loggingIn
-    // 2 connected
-    // 3 disconnecting (not used)
+    //  0 disconnected
+    //  1 loggingIn
+    //  2 connected
+    //  3 disconnecting (not used)
   }
 
   showDebug(debugEnabled = false) {
